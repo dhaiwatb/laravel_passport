@@ -29,11 +29,11 @@ class BaseController extends Controller
      * @param  int $status
      * @return \Illuminate\Http\Response
      */
-    protected function sendErrorResponse($message, $status = Response::HTTP_BAD_REQUEST)
+    protected function sendErrorResponse($data = null, $status = Response::HTTP_BAD_REQUEST)
     {
         return response()->json([
             'success' => false,
-            'error' => $message
+            'error' => $data
         ], $status);
     }
 }
