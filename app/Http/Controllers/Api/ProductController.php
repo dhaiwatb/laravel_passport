@@ -80,6 +80,7 @@ class ProductController extends BaseController
      */
     public function update(Request $request, string $id)
     {
+        // dd($request->all());
         $product = Product::findOrFail($id);
         $product->name = $request->name;
         $product->price = $request->price;
@@ -94,10 +95,19 @@ class ProductController extends BaseController
      */
     public function destroy(string $id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::find($id);
 
-        $product->delete();
+        if($product){
 
-        return $this->sendSuccessResponse(compact('product'), 200);
+            $product->delete();
+    
+            $data['message'] = "Product Deleted";
+    
+            return $this->sendSuccessResponse($data, 200);
+        }
+        else{
+            return $this->sendErrorResponse(['message' => 'Product not found'], 200);
+        }
+
     }
 }
